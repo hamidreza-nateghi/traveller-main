@@ -1,11 +1,12 @@
 import { memo } from 'react'
 import type { FC } from 'react'
 import { useMutation } from '@apollo/client'
-import { DocumentNode } from 'graphql'
-import { Box, HStack, IconButton, Tooltip, IconButtonProps } from '@chakra-ui/react'
+import type { DocumentNode } from 'graphql'
+import { Box, HStack, IconButton, Tooltip } from '@chakra-ui/react'
+import type { IconButtonProps } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 import { FaSuitcaseRolling } from 'react-icons/fa'
-import { GET_VISITED, GET_WISHLIST, ADD_TO_LIST } from './schema'
+import { GET_VISITED, GET_WISHLIST, ADD_TO_LIST } from '../../schema'
 
 export type City = {
   id: number

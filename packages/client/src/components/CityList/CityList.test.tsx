@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react'
-import { render } from './test-utils'
+import { render } from '../../test-utils'
 import { CityList } from './CityList'
 
 describe('<CityList /> component', () => {

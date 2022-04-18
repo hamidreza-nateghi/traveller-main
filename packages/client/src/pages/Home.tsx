@@ -3,12 +3,12 @@ import type { FC } from 'react'
 import { useLazyQuery } from '@apollo/client'
 import { Box, InputRightElement, Input, InputGroup, IconButton, Spinner } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
-import { CityList } from './CityList'
-import { GET_CITIES } from './schema'
+import { CityList } from '../components/CityList/CityList'
+import { GET_CITIES } from '../schema'
 
 export const Home: FC = () => {
   const [value, setValue] = React.useState('')
-  const handleChange = (event: any) => setValue(event.target.value)
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setValue(event.target.value)
   const handleSearch = () => findCity({ variables: { filter: { name: value } } })
 
   const [findCity, { loading, data }] = useLazyQuery(GET_CITIES)

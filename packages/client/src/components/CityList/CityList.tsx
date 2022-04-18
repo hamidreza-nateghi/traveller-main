@@ -1,8 +1,8 @@
 import { memo } from 'react'
 import type { FC } from 'react'
 import { SimpleGrid } from '@chakra-ui/react'
-import { CityCard } from './CityCard'
-import type { City } from './CityCard'
+import { CityCard } from '../CityCard/CityCard'
+import type { City } from '../CityCard/CityCard'
 
 type CityListProps = {
   list: City[]

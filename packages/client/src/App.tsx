@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 import { ChakraProvider, Box, Container, VStack, extendTheme } from '@chakra-ui/react'
 import { Route, Routes } from 'react-router-dom'
-import { TopBar } from './TopBar'
-import { Header } from './Header'
-import { Home } from './Home'
-import { WishList } from './WishList'
-import { Visited } from './Visited'
+import { TopBar } from './components/TopBar'
+import { Header } from './components/Header'
+import { Home } from './pages/Home'
+import { WishList } from './pages/WishList'
+import { Visited } from './pages/Visited'
 
 import { MyApolloProvider } from './MyApolloProvider'
 
