@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, HttpLink, from, ApolloProvider } from '@ap
 import { onError } from '@apollo/client/link/error'
 import { useToast } from '@chakra-ui/react'
 
-export function MyApolloProvider({ children }: any) {
+export const MyApolloProvider: typeof ApolloProvider = ({ children }) => {
   const toast = useToast()
 
   const httpLink = new HttpLink({
@@ -35,5 +35,6 @@ export function MyApolloProvider({ children }: any) {
     link: from([errorLink, httpLink]),
     cache: new InMemoryCache(),
   })
+
   return <ApolloProvider client={client}>{children}</ApolloProvider>
 }
