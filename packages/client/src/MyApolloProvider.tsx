@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, HttpLink, from, ApolloProvider } from '@ap
 import { onError } from '@apollo/client/link/error'
 import { useToast } from '@chakra-ui/react'
 
-export const MyApolloProvider: typeof ApolloProvider = ({ children }) => {
+export const MyApolloProvider: React.FC<{ children: React.ReactNode | React.ReactNode[] | null }> = ({ children }) => {
   const toast = useToast()
 
   const httpLink = new HttpLink({
@@ -10,7 +10,7 @@ export const MyApolloProvider: typeof ApolloProvider = ({ children }) => {
   })
 
   const errorLink = onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors)
+    if (graphQLErrors) {
       graphQLErrors.forEach(({ message }) =>
         toast({
           title: 'GraphQL error',
@@ -20,7 +20,7 @@ export const MyApolloProvider: typeof ApolloProvider = ({ children }) => {
           isClosable: true,
         })
       )
-    else if (networkError) {
+    } else if (networkError) {
       toast({
         title: 'Network error',
         description: networkError.message,
