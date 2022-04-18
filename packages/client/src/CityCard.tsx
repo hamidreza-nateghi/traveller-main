@@ -1,7 +1,8 @@
 import { memo } from 'react'
 import type { FC } from 'react'
 import { useMutation } from '@apollo/client'
-import { Box, HStack, IconButton, Tooltip } from '@chakra-ui/react'
+import { DocumentNode } from 'graphql'
+import { Box, HStack, IconButton, Tooltip, IconButtonProps } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 import { FaSuitcaseRolling } from 'react-icons/fa'
 import { GET_VISITED, GET_WISHLIST, ADD_TO_LIST } from './schema'
@@ -14,19 +15,26 @@ export type City = {
   wishlist: boolean
 }
 
-const AddButton = ({ cityId, icon, property, list, refetchQueries }: any) => {
+interface AddButtonProps extends Pick<IconButtonProps, 'icon'> {
+  cityId: City['id']
+  property: string
+  isListed: boolean
+  refetchQueries: [DocumentNode, string]
+}
+
+const AddButton: FC<AddButtonProps> = ({ cityId, icon, property, isListed, refetchQueries }) => {
   const [addToList, { loading }] = useMutation(ADD_TO_LIST, { refetchQueries })
 
-  const handleClick = () => addToList({ variables: { input: { id: cityId, [property]: !list } } })
+  const handleClick = () => addToList({ variables: { input: { id: cityId, [property]: !isListed } } })
 
-  const label = `${list ? 'Remove from' : 'Add to'} ${property}`
+  const label = `${isListed ? 'Remove from' : 'Add to'} ${property}`
 
   return (
     <Tooltip hasArrow label={label} aria-label={`tooltip ${property}`}>
       <IconButton
         aria-label={`${property} button`}
         icon={icon}
-        colorScheme={list ? 'cyan' : 'gray'}
+        colorScheme={isListed ? 'cyan' : 'gray'}
         variant="ghost"
         isRound
         fontSize={24}
@@ -48,14 +56,14 @@ export const CityCard: FC<City> = memo(props => {
             cityId={id}
             icon={<FaSuitcaseRolling />}
             property="visited"
-            list={visited}
+            isListed={visited}
             refetchQueries={[GET_VISITED, 'GetVisited']}
           />
           <AddButton
             cityId={id}
             icon={<StarIcon />}
             property="wishlist"
-            list={wishlist}
+            isListed={wishlist}
             refetchQueries={[GET_WISHLIST, 'GetWishlist']}
           />
         </HStack>
