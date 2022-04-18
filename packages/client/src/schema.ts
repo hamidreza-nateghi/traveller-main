@@ -45,7 +45,6 @@ export const GET_WISHLIST = gql`
 export const ADD_TO_LIST = gql`
   mutation AddToList($input: CitiesMutationInput) {
     updateCity(input: $input) {
-      name
       id
       visited
       wishlist
