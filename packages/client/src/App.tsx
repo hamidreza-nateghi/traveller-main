@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { ChakraProvider, Box, Container, VStack, extendTheme } from '@chakra-ui/react'
-import { Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { TopBar } from './TopBar'
 import { Header } from './Header'
 import { Home } from './Home'
@@ -31,21 +31,23 @@ const components = {
 
 // I moved ApolloProvider here because I make toast on errors and Toast needs to access Chakra theme
 export const App: FC = () => (
-  <ChakraProvider theme={extendTheme({ fonts, components })}>
-    <MyApolloProvider>
-      <TopBar />
-      <Box textAlign="center">
-        <VStack spacing="8">
-          <Header />
-          <Container maxW="container.md">
-            <Routes>
-              <Route index element={<Home />} />
-              <Route path="wish-list" element={<WishList />} />
-              <Route path="visited" element={<Visited />} />
-            </Routes>
-          </Container>
-        </VStack>
-      </Box>
-    </MyApolloProvider>
-  </ChakraProvider>
+  <BrowserRouter>
+    <ChakraProvider theme={extendTheme({ fonts, components })}>
+      <MyApolloProvider>
+        <TopBar />
+        <Box textAlign="center">
+          <VStack spacing="8">
+            <Header />
+            <Container maxW="container.md">
+              <Routes>
+                <Route index element={<Home />} />
+                <Route path="wish-list" element={<WishList />} />
+                <Route path="visited" element={<Visited />} />
+              </Routes>
+            </Container>
+          </VStack>
+        </Box>
+      </MyApolloProvider>
+    </ChakraProvider>
+  </BrowserRouter>
 )

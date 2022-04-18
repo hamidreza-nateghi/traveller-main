@@ -1,6 +1,5 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
 import { ColorModeScript } from '@chakra-ui/react'
 import { App } from './App'
 import { reportWebVitals } from './reportWebVitals'
@@ -8,10 +7,8 @@ import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ColorModeScript />
-      <App />
-    </BrowserRouter>
+    <ColorModeScript />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 )
