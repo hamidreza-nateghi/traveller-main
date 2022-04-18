@@ -1,16 +1,36 @@
 import React from 'react'
 import type { FC } from 'react'
-import { Container, InputRightElement, Input, Heading, InputGroup, IconButton, VStack } from '@chakra-ui/react'
+import { useLazyQuery } from '@apollo/client'
+import { Box, InputRightElement, Input, InputGroup, IconButton, Spinner } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
+import { CityList } from './CityList'
+import { GET_CITIES } from './schema'
 
-export const Home: FC = () => (
-  <VStack spacing="8">
-    <Heading as="h1">Smart traveller</Heading>
-    <Container maxW="container.md">
+export const Home: FC = () => {
+  const [value, setValue] = React.useState('')
+  const handleChange = (event: any) => setValue(event.target.value)
+  const handleSearch = () => findCity({ variables: { filter: { name: value } } })
+
+  const [findCity, { loading, data }] = useLazyQuery(GET_CITIES)
+
+  const renderList = () => {
+    if (loading) return <Spinner />
+
+    if (data) return <CityList list={data?.cities.cities} />
+
+    // I skip error check since we handle error in ApolloProvider
+    return null
+  }
+
+  return (
+    <>
       <InputGroup>
-        <Input />
-        <InputRightElement children={<IconButton aria-label="" icon={<Search2Icon />} />} />
+        <Input value={value} onChange={handleChange} />
+        <InputRightElement
+          children={<IconButton onClick={handleSearch} aria-label="search cities" icon={<Search2Icon />} />}
+        />
       </InputGroup>
-    </Container>
-  </VStack>
-)
+      <Box mt="8">{renderList()}</Box>
+    </>
+  )
+}

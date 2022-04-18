@@ -1,10 +1,14 @@
-import React from 'react'
 import type { FC } from 'react'
-import { Container, Heading } from '@chakra-ui/react'
+import { useQuery } from '@apollo/client'
+import { Spinner } from '@chakra-ui/react'
+import { CityList } from './CityList'
+import { GET_VISITED } from './schema'
 
-export const Visited: FC = () => (
-  <>
-    <Heading as="h1">Visited</Heading>
-    <Container centerContent maxW="container.md" flexDir="row"></Container>
-  </>
-)
+export const Visited: FC = () => {
+  const { loading, error, data } = useQuery(GET_VISITED)
+
+  if (loading) return <Spinner />
+  if (error) return null
+
+  return <CityList list={data.cities.cities} />
+}

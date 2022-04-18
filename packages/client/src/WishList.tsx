@@ -1,10 +1,15 @@
-import React from 'react'
 import type { FC } from 'react'
-import { Container, Heading } from '@chakra-ui/react'
+import { useQuery } from '@apollo/client'
+import { Spinner } from '@chakra-ui/react'
+import { CityList } from './CityList'
+import { GET_WISHLIST } from './schema'
 
-export const WishList: FC = () => (
-  <>
-    <Heading as="h1">Wish list</Heading>
-    <Container centerContent maxW="container.md" flexDir="row"></Container>
-  </>
-)
+// I know it's simliar to Visited, but combining them is a trade-off between DRY and readability
+export const WishList: FC = () => {
+  const { loading, error, data } = useQuery(GET_WISHLIST)
+
+  if (loading) return <Spinner />
+  if (error) return <p>error</p>
+
+  return <CityList list={data.cities.cities} />
+}
